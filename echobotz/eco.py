@@ -6,7 +6,7 @@ class echo(object):
 <b>This bot scrapes posters from various OTT platforms and bypasses direct links from cloud sites.</b>
 
 <b>✺ Commands</b>
-<blockquote expandable>
+<blockquote>
 /poster - Scrape any movie/show poster
 /overlap - Overlay a logo on a poster
 /imdb - Search movie/series on IMDb
