@@ -23,17 +23,14 @@ async def main():
 
     Formatter.converter = changetz
 
-    # ✅ Public-bot style (even single client)
     await gather(
         EchoBot.start(),
     )
-
-    # AFTER client is ready
     await EchoBot.bot.set_bot_commands(_get_bot_commands())
 
     add_plugs()
 
-    LOGGER.info("EchoBot fully started")
+    LOGGER.info("All EchoBot Services started")
 
     await idle()
 
