@@ -10,7 +10,7 @@ from ..plugins.service import (
 )
 from ..plugins.imdb import _imdb_search, _imdb_callback
 from ..plugins.anilist import _anime, _anime_cb
-from ..plugins.bypass import _bypass_cmd
+from ..plugins.bypass import _bypass_cmd, _bypass_hc_pack_cb
 from ..plugins.tmdb import _p
 from ..plugins.overlap import _olap_cmd, _olap_cb
 from ..helper.utils.bot_cmds import BotCommands
@@ -120,6 +120,13 @@ def add_plugs():
     )
 
     EchoBot.bot.add_handler(
+        CallbackQueryHandler(
+            _bypass_hc_pack_cb,
+            filters.regex(r"^bpqh "),
+        )
+    )
+
+    EchoBot.bot.add_handler(
         MessageHandler(
             _p,
             filters.command(BotCommands.PosterSearchCommand, case_sensitive=True)
@@ -156,3 +163,4 @@ def add_plugs():
             filters.regex(r"^ov ") & CustomFilters.authorized,
         )
     )
+    

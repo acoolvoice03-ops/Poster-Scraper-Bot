@@ -11,6 +11,7 @@ class echo(object):
 /overlap - Overlay a logo on a poster  
 /imdb - Search movie/series on IMDb  
 /anime - Search Anime on Anilist  
+/crunchyroll - Scrape Crunchyroll anime poster from name or URL
 /gdflix - Bypass GDFlix links  
 /vegamovies - Bypass Vegamovies DDL Links
 /extraflix - Bypass ExtraFlix links to direct links  
@@ -50,6 +51,7 @@ class echo(object):
 <code>/poster Avatar</code>  
 <code>/poster Avatar 2022</code>  
 <code>/poster Avatar: The Way of Water</code>  
+<code>/crunchyroll Jujutsu Kaisen</code>
 
 <b>NOTE:</b> Bot can filter results by keywords and release year.  
 '''
