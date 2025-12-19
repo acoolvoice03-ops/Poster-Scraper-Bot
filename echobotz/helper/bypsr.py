@@ -34,6 +34,8 @@ _BYPASS_CMD_TO_SERVICE = {
     "nd": "nexdrive",
     "hblinks": "hblinks",
     "hbl": "hblinks",
+    "vegamovies": "vegamovies",
+    "vega": "vegamovies",
 }
 
 _BYPASS_ENDPOINTS = {
@@ -55,6 +57,7 @@ _BYPASS_ENDPOINTS = {
     "luxdrive": "https://pbx1botapi.vercel.app/api/luxdrive?url=",
     "nexdrive": "https://pbx1botsapi2.vercel.app/api/nexdrive?url=",
     "hblinks": "https://pbx1botsapi2.vercel.app/api/hblinks?url=",
+    "vegamovies": "https://pbx1botsapi2.vercel.app/api/vega?url=",
 }
 
 def _bp_srv(cmd):
@@ -90,24 +93,43 @@ def _bp_label_from_name(name):
         return s[8:].strip() or s
     return s
 
-
 def _bp_links(links):
     if not isinstance(links, dict) or not links:
-        return "• No direct links found."
-    lines = []
-    for label, url in links.items():
-        if not isinstance(url, str):
+        return "╰╴ No direct links found."
+
+    grouped = any("|" in str(k) for k in links)
+    out = []
+
+    if not grouped:
+        items = [
+            (str(k).strip() or "Link", v.strip())
+            for k, v in links.items()
+            if isinstance(v, str) and v.strip().startswith(("http://", "https://"))
+        ]
+        for i, (k, v) in enumerate(items):
+            out.append(
+                f"{'╰╴' if i == len(items)-1 else '╞╴'} <b>{k}:</b> <a href=\"{v}\">Click Here</a>"
+            )
+        return "\n".join(out) if out else "╰╴ No direct links found."
+
+    groups = {}
+    for k, v in links.items():
+        if not isinstance(v, str):
             continue
-        u = url.strip()
+        u = v.strip()
         if not u.startswith(("http://", "https://")):
             continue
-        lbl = str(label).strip()
-        if not lbl:
-            lbl = "Link"
-        lines.append(f"• <b>{lbl}:</b> <a href=\"{u}\">Click Here</a>")
-    if not lines:
-        return "• No direct links found."
-    return "\n".join(lines)
+        a, b = str(k).split("|", 1)
+        groups.setdefault(a.strip(), []).append((b.strip(), u))
+
+    for g, items in groups.items():
+        out.append(f"\n<b>{g}</b>")
+        for i, (k, v) in enumerate(items):
+            out.append(
+                f"{'╰╴' if i == len(items)-1 else '╞╴'} <b>{k}:</b> <a href=\"{v}\">Click Here</a>"
+            )
+
+    return "\n".join(out).strip()
 
 def _bp_norm(data, service):
     root = data
@@ -235,7 +257,6 @@ async def _bp_info(cmd_name, target_url):
     base = _BYPASS_ENDPOINTS.get(service)
     if not base:
         return None, "Bypass endpoint not configured for this service."
-
     try:
         parsed = urlparse(target_url)
         if not parsed.scheme or not parsed.netloc:
@@ -245,36 +266,35 @@ async def _bp_info(cmd_name, target_url):
 
     api_url = base if service == "transfer_it" else f"{base}{quote_plus(target_url)}"
     LOGGER.info(f"Bypassing via [{service}] -> {api_url}")
-
     try:
         if service == "transfer_it":
             resp = await _sync_to_async(
-                requests.post, api_url, json={"url": target_url}, timeout=20
+                requests.post,
+                api_url,
+                json={"url": target_url},
+                timeout=20,
             )
         else:
             resp = await _sync_to_async(
-                requests.get, api_url, timeout=20
+                requests.get,
+                api_url,
+                timeout=20,
             )
     except Exception as e:
         LOGGER.error(f"Bypass HTTP error: {e}", exc_info=True)
         return None, "Failed to reach bypass service."
-
     if resp.status_code != 200:
         LOGGER.error(f"Bypass API returned {resp.status_code}: {resp.text[:200]}")
         return None, "Bypass service error."
-
     try:
         data = resp.json()
     except json.JSONDecodeError as e:
         LOGGER.error(f"Bypass JSON parse error: {e}")
         return None, "Invalid response from bypass service."
-
     if not isinstance(data, dict):
         return None, "Unexpected response from bypass service."
-
     if "success" in data and not data.get("success"):
         return None, data.get("message") or "Bypass failed."
-
     if service == "transfer_it":
         direct = data.get("url")
         if not direct:
@@ -287,7 +307,6 @@ async def _bp_info(cmd_name, target_url):
             "links": {"Direct Link": str(direct)},
         }
         return _bp_norm(fake, service), None
-
     if service == "hblinks":
         direct = data.get("url")
         if not direct:
@@ -302,6 +321,43 @@ async def _bp_info(cmd_name, target_url):
             },
         }
         return _bp_norm(fake, service), None
-        
+    if service == "vegamovies":
+        results = data.get("results")
+        if not isinstance(results, list) or not results:
+            return None, "No files found."
+
+        links_clean = {}
+
+        for item in results:
+            if not isinstance(item, dict):
+                continue
+
+            fname = item.get("file_name", "File")
+            fsize = item.get("file_size", "N/A")
+
+            label_base = fname
+            if fsize and fsize != "N/A":
+                label_base = f"{fname} ({fsize})"
+
+            for link in item.get("links", []):
+                if not isinstance(link, dict):
+                    continue
+                url = link.get("url")
+                tag = link.get("tag") or "Link"
+
+                if isinstance(url, str) and url.startswith(("http://", "https://")):
+                    label = f"{label_base} | {tag}"
+                    links_clean[label] = url
+
+        if not links_clean:
+            return None, "No direct links found."
+
+        fake = {
+            "title": "Vegamovies Files",
+            "filesize": "Multiple",
+            "format": "MKV",
+            "links": links_clean,
+        }
+        return _bp_norm(fake, service), None
     norm = _bp_norm(data, service)
     return norm, None

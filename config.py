@@ -99,12 +99,12 @@ class Config:
 """
     
     BYPASS_TEMPLATE = """
-<b>✦ Bypass Result</b>
+<b>✦ Bypass Result ✦</b>
 
 {header_block}
 
 {meta_block}
-<b>🔗 Links:</b>
+<b>╭╴Links:</b>
 {links_block}
 
 <b>✺ Original URL:</b>

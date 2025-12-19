@@ -12,6 +12,7 @@ class echo(object):
 /imdb - Search movie/series on IMDb  
 /anime - Search Anime on Anilist  
 /gdflix - Bypass GDFlix links  
+/vegamovies - Bypass Vegamovies DDL Links
 /extraflix - Bypass ExtraFlix links to direct links  
 /hubcloud - Bypass HubCloud links to direct links  
 /hubdrive - Bypass Hubdrive links to direct links  
