@@ -5,12 +5,12 @@ load_dotenv("../config.env", override=True)
 load_dotenv("config.env", override=True) 
 
 class Config:
-    API_ID = int(os.environ.get("API_ID", 0))
-    API_HASH = os.environ.get("API_HASH", "")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
-    DATABASE_URL = os.environ.get("DATABASE_URL", "")
+    API_ID = int(os.environ.get("API_ID", 27806628))
+    API_HASH = os.environ.get("API_HASH", "25d88301e886b82826a525b7cf52e090")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "8320582942:AAE8zw5KLaxXknpsjNCxh5ijzGvV_0xwTP0")
+    DATABASE_URL = os.environ.get("DATABASE_URL", "mongodb+srv://Bosshub:JMaff0WvazwNxKky@cluster0.l0xcoc1.mongodb.net/?appName=Cluster0")
     DATABASE_NAME = os.environ.get("DATABASE_NAME", "ebotz")
-    OWNER_ID = int(os.environ.get("OWNER_ID", 0))
+    OWNER_ID = int(os.environ.get("OWNER_ID", 8525952693))
     SUDO_USERS = (
         list(map(int, os.environ.get("SUDO_USERS", "").split()))
         if os.environ.get("SUDO_USERS")
