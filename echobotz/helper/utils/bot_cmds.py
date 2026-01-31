@@ -82,7 +82,6 @@ CMD_HELP = {
     "anime": "Search Anime on Anilist",
     "crunchyroll": "Scrape Crunchyroll anime poster from name or URL",
     "prime": "Scrape Prime Video poster from URL",
-    "zee5": "Scrape ZEE5 poster from URL",
     "appletv": "Scrape Apple TV+ poster from URL",
     "airtel": "Scrape Airtel Xstream poster from URL",
     "sunnxt": "Scrape Sun NXT poster from URL",
