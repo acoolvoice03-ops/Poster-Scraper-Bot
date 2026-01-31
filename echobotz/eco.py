@@ -28,7 +28,6 @@ class echo(object):
 /nexdrive - Bypass NexDrive links to direct links
 /hblinks -Bypass HBLinks to direct links
 /prime - Prime Video poster  
-/zee5 - ZEE5 poster  
 /appletv - Apple TV+ poster  
 /airtel - Airtel Xstream poster  
 /sunnxt - Sun NXT poster  
