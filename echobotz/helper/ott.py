@@ -32,7 +32,7 @@ def _looks_like_image(url: str) -> bool:
 
 _CMD_TO_PROVIDER = {
     "prime": "primevideo", "pv": "primevideo",
-    "zee5": "zee5", "z5": "zee5",
+
     "appletv": "appletv", "atv": "appletv",
     "airtel": "airtelxstream", "ax": "airtelxstream",
     "sunnxt": "sunnxt", "sn": "sunnxt",
