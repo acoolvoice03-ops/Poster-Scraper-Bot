@@ -6,7 +6,6 @@ class BotCommands:
         "Start": ["start", "help"],
         "Poster": [
             "prime", "pv",
-            "zee5", "z5",
             "appletv", "atv",
             "airtel", "ax",
             "sunnxt", "sn",
