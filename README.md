@@ -29,7 +29,6 @@ Powerful telegram bot that scrape Posters from multiple OTT platforms & Bypass d
 - Prime Video
 - Crunchyroll
 - Netflix
-- ZEE5
 - Apple TV+
 - Airtel Xstream
 - Sun NXT
