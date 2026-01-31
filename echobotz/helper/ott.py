@@ -55,7 +55,6 @@ _CMD_TO_PROVIDER = {
 
 _PROVIDER_NAMES = {
     "primevideo": "Prime Video",
-    "zee5": "ZEE5",
     "appletv": "Apple TV+",
     "airtelxstream": "Airtel Xstream",
     "sunnxt": "Sun NXT",
@@ -77,8 +76,7 @@ _PROVIDER_NAMES = {
 }
 
 _WORKERS = {
-   # "primevideo": "https://primevideo.the-zake.workers.dev/?url=", Under Maintenance 
-    "zee5": "https://zee5.the-zake.workers.dev/?url=",
+   # "primevideo": "https://primevideo.the-zake.workers.dev/?url=", Under Maintenance
     "appletv": "https://appletv.the-zake.workers.dev/?url=",
     "airtelxstream": "https://airtelxstream.the-zake.workers.dev/?url=",
     "sunnxt": "https://sunnxt.the-zake.workers.dev/?url=",
